@@ -36,11 +36,11 @@ export class UsersService {
       },
     });
 
-    if (!user) {
-      await this.usersRepository.insert({ username: payload.username });
-    } else {
+    if (user) {
       throw new ConflictException('Username already exists');
     }
+
+    await this.usersRepository.insert({ username: payload.username });
 
     let jwtSignPayload = {
       username: payload.username,
