@@ -10,12 +10,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as moment from 'moment-timezone';
 import { TransactionsEntity } from 'src/entities/transactions.entity';
 import { UsersEntity } from 'src/entities/users.entity';
+import { TransactionType } from 'src/utils/enums/TransactionType';
 import { DataSource, Repository } from 'typeorm';
 import { GetBalanceResponseDto } from './dtos/get-balance-response.dto';
 import { GetTransactionHistoryResponseDto } from './dtos/get-transaction-history-response.dto';
+import { TopUpBalanceRequestDto } from './dtos/top-up-balance-request.dto';
+import { TopUpBalanceResponseDto } from './dtos/top-up-balance-response.dto';
 import { TransferRequestDto } from './dtos/transfer-request-dto';
 import { TransferResponseDto } from './dtos/transfer-response-dto';
-import { TransactionType } from 'src/utils/enums/TransactionType';
 
 @Injectable()
 export class WalletsService {
@@ -158,6 +160,52 @@ export class WalletsService {
 
     return {
       message: 'Success',
+      statusCode: HttpStatus.OK,
+    };
+  }
+
+  async topUpBalance(
+    payload: TopUpBalanceRequestDto,
+    userData: UsersEntity,
+  ): Promise<TopUpBalanceResponseDto> {
+    if (payload.amount <= 0 || payload.amount > 10000000) {
+      throw new BadRequestException('Invalid top up amount');
+    }
+
+    const queryRunner = await this.dataSource.createQueryRunner();
+    await queryRunner.startTransaction();
+
+    try {
+      await queryRunner.manager.insert(TransactionsEntity, {
+        userId: userData.id,
+        description: `Top up balance`,
+        amount: payload.amount,
+        type: TransactionType.TOPUP,
+      });
+
+      await queryRunner.manager.update(
+        UsersEntity,
+        {
+          id: userData.id,
+          username: userData.username,
+          delFlag: false,
+        },
+        {
+          balance: +userData.balance + +payload.amount,
+        },
+      );
+
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+
+      throw new InternalServerErrorException();
+    } finally {
+      await queryRunner.release();
+    }
+
+    return {
+      message: 'Success top up',
       statusCode: HttpStatus.OK,
     };
   }

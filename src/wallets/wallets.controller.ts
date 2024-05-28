@@ -5,6 +5,8 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UsersEntity } from 'src/entities/users.entity';
 import { GetBalanceResponseDto } from './dtos/get-balance-response.dto';
 import { GetTransactionHistoryResponseDto } from './dtos/get-transaction-history-response.dto';
+import { TopUpBalanceRequestDto } from './dtos/top-up-balance-request.dto';
+import { TopUpBalanceResponseDto } from './dtos/top-up-balance-response.dto';
 import { TransferRequestDto } from './dtos/transfer-request-dto';
 import { TransferResponseDto } from './dtos/transfer-response-dto';
 import { WalletsService } from './wallets.service';
@@ -36,5 +38,13 @@ export class WalletsController {
     @GetUser() user: UsersEntity,
   ): Promise<TransferResponseDto> {
     return this.walletsService.transfer(transferRequestDto, user);
+  }
+
+  @Post('topup')
+  async topUpBalance(
+    @Body() topUpBalanceRequestDto: TopUpBalanceRequestDto,
+    @GetUser() user: UsersEntity,
+  ): Promise<TopUpBalanceResponseDto> {
+    return this.walletsService.topUpBalance(topUpBalanceRequestDto, user);
   }
 }
