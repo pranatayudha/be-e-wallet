@@ -1,12 +1,30 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Res } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 
+@ApiTags('Default')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  showDescription(@Res() res: Response) {
+    return res.send(
+      `
+        <!DOCTYPE html>
+        
+        <html>
+          <body>
+            <div style="position: absolute; top: 50%; left: 50%; 
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);">
+              <center>
+                <h1>E Wallet</h1>
+                <h2>Backend Service</h2> 
+              </center>
+            </div>        
+          </body>
+        </html>
+      `,
+    );
   }
 }
