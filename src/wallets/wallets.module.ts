@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersEntity } from 'src/users/users.entity';
+import { UsersEntity } from 'src/entities/users.entity';
 import { WalletsController } from './wallets.controller';
 import { WalletsService } from './wallets.service';
 

@@ -4,7 +4,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersEntity } from 'src/users/users.entity';
+import { UsersEntity } from 'src/entities/users.entity';
 import { Repository } from 'typeorm';
 import { GetBalanceResponseDto } from './dtos/get-balance-response.dto';
 

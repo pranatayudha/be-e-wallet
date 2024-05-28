@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersController } from './users.controller';
-import { UsersEntity } from './users.entity';
+import { UsersEntity } from '../entities/users.entity';
 import { UsersService } from './users.service';
 
 @Module({

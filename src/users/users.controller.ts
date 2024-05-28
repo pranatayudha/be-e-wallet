@@ -7,7 +7,7 @@ import { LoginRequestDto } from './dtos/login-request.dto';
 import { LoginResponseDto } from './dtos/login-response.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { GetUser } from 'src/auth/get-user-decorator';
-import { UsersEntity } from './users.entity';
+import { UsersEntity } from '../entities/users.entity';
 
 @ApiTags('Users')
 @Controller()

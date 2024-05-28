@@ -12,7 +12,7 @@ import { LoginResponseDto } from './dtos/login-response.dto';
 import { LogoutResponseDto } from './dtos/logout-response.dto';
 import { RegisterRequestDto } from './dtos/register-request.dto';
 import { RegisterResponseDto } from './dtos/register-response.dto';
-import { UsersEntity } from './users.entity';
+import { UsersEntity } from '../entities/users.entity';
 
 @Injectable()
 export class UsersService {
