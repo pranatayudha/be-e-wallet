@@ -7,11 +7,12 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { LoginRequestDto } from './dtos/login-request.dto';
+import { LoginResponseDto } from './dtos/login-response.dto';
+import { LogoutResponseDto } from './dtos/logout-response.dto';
 import { RegisterRequestDto } from './dtos/register-request.dto';
 import { RegisterResponseDto } from './dtos/register-response.dto';
 import { UsersEntity } from './users.entity';
-import { LoginRequestDto } from './dtos/login-request.dto';
-import { LoginResponseDto } from './dtos/login-response.dto';
 
 @Injectable()
 export class UsersService {
@@ -96,6 +97,29 @@ export class UsersService {
       data: {
         token: accessToken,
       },
+      statusCode: HttpStatus.OK,
+    };
+  }
+
+  async logout(userData: UsersEntity): Promise<LogoutResponseDto> {
+    const user = await this.usersRepository.findOne({
+      where: {
+        username: userData.username,
+        isLogin: userData.isLogin,
+      },
+    });
+
+    if (!user) {
+      throw new UnprocessableEntityException('Username not logged in');
+    }
+
+    await this.usersRepository.update(
+      { username: userData.username, isLogin: userData.isLogin },
+      { isLogin: false },
+    );
+
+    return {
+      message: 'Success',
       statusCode: HttpStatus.OK,
     };
   }
