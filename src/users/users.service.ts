@@ -1,18 +1,21 @@
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
   ConflictException,
   HttpStatus,
+  Inject,
   Injectable,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Cache } from 'cache-manager';
 import { Repository } from 'typeorm';
+import { UsersEntity } from '../entities/users.entity';
 import { LoginRequestDto } from './dtos/login-request.dto';
 import { LoginResponseDto } from './dtos/login-response.dto';
 import { LogoutResponseDto } from './dtos/logout-response.dto';
 import { RegisterRequestDto } from './dtos/register-request.dto';
 import { RegisterResponseDto } from './dtos/register-response.dto';
-import { UsersEntity } from '../entities/users.entity';
 
 @Injectable()
 export class UsersService {
@@ -20,6 +23,7 @@ export class UsersService {
     private readonly jwtService: JwtService,
     @InjectRepository(UsersEntity)
     private readonly usersRepository: Repository<UsersEntity>,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   async getUser(payload: any): Promise<UsersEntity> {

@@ -1,16 +1,24 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import {
+  Body,
+  Controller,
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { GetUser } from 'src/auth/get-user-decorator';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { UsersEntity } from '../entities/users.entity';
+import { LoginRequestDto } from './dtos/login-request.dto';
+import { LoginResponseDto } from './dtos/login-response.dto';
 import { RegisterRequestDto } from './dtos/register-request.dto';
 import { RegisterResponseDto } from './dtos/register-response.dto';
 import { UsersService } from './users.service';
-import { LoginRequestDto } from './dtos/login-request.dto';
-import { LoginResponseDto } from './dtos/login-response.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { GetUser } from 'src/auth/get-user-decorator';
-import { UsersEntity } from '../entities/users.entity';
 
 @ApiTags('Users')
 @Controller()
+@UseInterceptors(CacheInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

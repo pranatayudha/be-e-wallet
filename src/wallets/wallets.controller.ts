@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/auth/get-user-decorator';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -15,6 +23,7 @@ import { WalletsService } from './wallets.service';
 @ApiBearerAuth('Authorization')
 @Controller()
 @UseGuards(JwtAuthGuard)
+@UseInterceptors(CacheInterceptor)
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
