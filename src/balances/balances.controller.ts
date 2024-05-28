@@ -7,12 +7,12 @@ import { BalancesService } from './balances.service';
 
 @ApiTags('Balances')
 @Controller('balance')
+@ApiBearerAuth('Authorization')
+@UseGuards(JwtAuthGuard)
 export class BalancesController {
   constructor(private readonly balancesService: BalancesService) {}
 
   @Get()
-  @ApiBearerAuth('Authorization')
-  @UseGuards(JwtAuthGuard)
   async getBalance(@GetUser() user: UsersEntity) {
     return this.balancesService.getBalance(user);
   }
