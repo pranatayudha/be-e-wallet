@@ -10,7 +10,7 @@ import { GetUser } from 'src/auth/get-user-decorator';
 import { UsersEntity } from './users.entity';
 
 @ApiTags('Users')
-@Controller('users')
+@Controller()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
