@@ -3,8 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersEntity } from 'src/users/users.entity';
-import { BalancesController } from './balances.controller';
-import { BalancesService } from './balances.service';
+import { WalletsController } from './wallets.controller';
+import { WalletsService } from './wallets.service';
 
 @Module({
   imports: [
@@ -15,8 +15,8 @@ import { BalancesService } from './balances.service';
     }),
     TypeOrmModule.forFeature([UsersEntity]),
   ],
-  controllers: [BalancesController],
-  providers: [BalancesService],
-  exports: [BalancesService],
+  controllers: [WalletsController],
+  providers: [WalletsService],
+  exports: [WalletsService],
 })
-export class BalancesModule {}
+export class WalletsModule {}

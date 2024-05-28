@@ -3,17 +3,17 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/auth/get-user-decorator';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UsersEntity } from 'src/users/users.entity';
-import { BalancesService } from './balances.service';
+import { WalletsService } from './wallets.service';
 
-@ApiTags('Balances')
-@Controller('balance')
+@ApiTags('Wallets')
 @ApiBearerAuth('Authorization')
+@Controller()
 @UseGuards(JwtAuthGuard)
-export class BalancesController {
-  constructor(private readonly balancesService: BalancesService) {}
+export class WalletsController {
+  constructor(private readonly walletsService: WalletsService) {}
 
-  @Get()
+  @Get('balance')
   async getBalance(@GetUser() user: UsersEntity) {
-    return this.balancesService.getBalance(user);
+    return this.walletsService.getBalance(user);
   }
 }

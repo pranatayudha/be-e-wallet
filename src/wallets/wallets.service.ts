@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 import { GetBalanceResponseDto } from './dtos/get-balance-response.dto';
 
 @Injectable()
-export class BalancesService {
+export class WalletsService {
   constructor(
     @InjectRepository(UsersEntity)
     private readonly usersRepository: Repository<UsersEntity>,

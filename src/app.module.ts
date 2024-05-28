@@ -4,9 +4,9 @@ import { DevtoolsModule } from '@nestjs/devtools-integration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
-import { BalancesModule } from './balances/balances.module';
 import { configValidationSchema } from './config.schema';
 import { UsersModule } from './users/users.module';
+import { WalletsModule } from './wallets/wallets.module';
 
 @Module({
   imports: [
@@ -39,7 +39,7 @@ import { UsersModule } from './users/users.module';
     }),
     UsersModule,
     AuthModule,
-    BalancesModule,
+    WalletsModule,
   ],
   controllers: [AppController],
 })
