@@ -3,6 +3,8 @@ import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { RegisterRequestDto } from './dtos/register-request.dto';
 import { RegisterResponseDto } from './dtos/register-response.dto';
 import { UsersService } from './users.service';
+import { LoginRequestDto } from './dtos/login-request.dto';
+import { LoginResponseDto } from './dtos/login-response.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -24,5 +26,22 @@ export class UsersController {
     @Body() registerRequestDto: RegisterRequestDto,
   ): Promise<RegisterResponseDto> {
     return this.usersService.register(registerRequestDto);
+  }
+
+  @Post('login')
+  @ApiBody({
+    type: LoginRequestDto,
+    examples: {
+      'John Doe': {
+        value: {
+          username: 'John Doe',
+        } as LoginRequestDto,
+      },
+    },
+  })
+  async login(
+    @Body() loginRequestDto: LoginRequestDto,
+  ): Promise<LoginResponseDto> {
+    return this.usersService.login(loginRequestDto);
   }
 }
