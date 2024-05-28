@@ -9,11 +9,11 @@ import {
 
 @Entity('transactions')
 export class TransactionsEntity {
-  @PrimaryGeneratedColumn()
-  id: bigint;
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: string;
 
   @Column({ nullable: true })
-  userId: number;
+  userId: string;
 
   @Column({ nullable: true })
   description: string;
