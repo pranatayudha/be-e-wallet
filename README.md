@@ -38,20 +38,29 @@
 $ npm install
 ```
 
-## Before running app
+## Running the app using local
+
+### Before running app
 
 1. Create database in PostgreSQL with name **e_wallet_db**.
 2. Open **init.sql** file from project folder then copy and paste in SQL editor.
-
-## Running the app
+3. Then run this command:
 
 ```bash
 # run the development server
-$ npm run start
-
-# or with watch mode
 $ npm run start:dev
 ```
+
+## Running the app using docker
+
+1. Run this command:
+
+```bash
+# run docker compose
+$ docker-compose up --build
+```
+
+2. Application running on http://localhost:3000, you can open [Swagger](http://localhost:3000/docs) too in your browser.
 
 ## Support
 
