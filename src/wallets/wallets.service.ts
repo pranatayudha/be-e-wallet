@@ -45,7 +45,7 @@ export class WalletsService {
     }
 
     return {
-      message: 'Success',
+      message: 'Success top up',
       data: {
         balance: +user.balance,
       },
@@ -163,7 +163,7 @@ export class WalletsService {
     }
 
     return {
-      message: 'Success',
+      message: 'Success transfer',
       statusCode: HttpStatus.OK,
     };
   }
